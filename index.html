@@ -283,7 +283,7 @@
         }
         
         .testimonial-text::before {
-            content: '"';
+            content: '';
             font-size: 4rem;
             color: var(--primary);
             opacity: 0.2;
@@ -434,6 +434,21 @@
             .testimonial-slider {
                 width: 300%;
             }
+
+            /* Add these new styles at the end of your existing media query */
+            .feature-card, .benefit-card {
+                transform: translateY(10px); /* Smaller transform for mobile */
+            }
+
+            /* Add this nested media query */
+            @media (prefers-reduced-motion: reduce) {
+                .feature-card, .benefit-card {
+                    transition: opacity 0.3s ease !important;
+                    transform: none !important;
+                }
+            }
+
+            
         }
         
         @keyframes slideUp {
@@ -712,7 +727,7 @@
     </footer>
     
     <script>
-        // Simple scroll animation for elements
+        // Improved scroll animation for elements
         document.addEventListener('DOMContentLoaded', function() {
             const scrollElements = document.querySelectorAll('.feature-card, .benefit-card');
             
@@ -722,13 +737,9 @@
             };
             
             const displayScrollElement = (element) => {
-                element.style.opacity = "0";
-                element.style.transform = "translateY(20px)";
-                setTimeout(() => {
-                    element.style.transition = "all 0.6s ease";
-                    element.style.opacity = "1";
-                    element.style.transform = "translateY(0)";
-                }, 100);
+                element.classList.add('animated');
+                element.style.opacity = "1";
+                element.style.transform = "translateY(0)";
             };
             
             const hideScrollElement = (element) => {
@@ -738,19 +749,31 @@
             
             const handleScrollAnimation = () => {
                 scrollElements.forEach((el) => {
-                    if (elementInView(el, 100)) {
+                    // Only apply animation if element hasn't been animated yet
+                    if (!el.classList.contains('animated') && elementInView(el, 100)) {
                         displayScrollElement(el);
-                    } else {
-                        hideScrollElement(el);
                     }
                 });
             };
             
             // Initialize elements
-            scrollElements.forEach(hideScrollElement);
+            scrollElements.forEach((el) => {
+                // Set initial styles
+                el.style.transition = "all 0.6s ease";
+                hideScrollElement(el);
+            });
             
-            // Add scroll event listener
-            window.addEventListener('scroll', handleScrollAnimation);
+            // Add scroll event listener with throttling to improve performance
+            let isScrolling = false;
+            window.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    window.requestAnimationFrame(() => {
+                        handleScrollAnimation();
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            });
             
             // Initial check
             handleScrollAnimation();
