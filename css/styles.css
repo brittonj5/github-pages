@@ -448,9 +448,31 @@ footer {
         font-size: 2.5rem;
     }
 
+    .hero .container {
+        flex-direction: column;
+        text-align: left; /* Keep text left-aligned as requested */
+    }
+
+    .hero-content {
+        text-align: left; /* Ensure hero text stays left-aligned */
+        width: 100%;
+    }
+
+    .hero-video {
+        flex: 1;
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center; /* Center the video wrapper */
+        padding: 0 1rem; /* Add some padding on sides */
+    }
+
     .video-wrapper {
         border-radius: 0.5rem;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        max-width: 400px; /* Limit max width for better mobile experience */
+        width: 100%;
     }
     
     .nav-links {
