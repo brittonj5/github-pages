@@ -94,10 +94,48 @@ header {
     overflow: hidden;
 }
 
+.hero .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
 .hero-content {
     max-width: 600px;
+    text-align: left;
     position: relative;
     z-index: 2;
+}
+
+.hero-video {
+    position: center;
+    /* padding-left: 10%; */
+    flex: 1;
+    max-width: 500px;
+    min-width: 400px;
+    animation: slideUp 0.8s ease forwards;
+    
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .hero h1 {
@@ -408,6 +446,11 @@ footer {
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
+    }
+
+    .video-wrapper {
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
     
     .nav-links {
